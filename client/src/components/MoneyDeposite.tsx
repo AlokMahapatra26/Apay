@@ -8,22 +8,28 @@ const MoneyDeposite = () => {
   const navigate = useNavigate()
 
   const deposite = () => {
-    const id = localStorage.getItem('id')
+    const id = localStorage.getItem('id');
+    const token = localStorage.getItem('token'); // Get token from localStorage
 
-  const payload = {
-    amount,
-    userId : id
-  }
+    const payload = {
+        amount,
+        userId: id
+    };
 
-  axios.post("http://localhost:3000/api/v1/account/deposit" , payload).then(response => {
-    console.log('Success' , response.data)
-    navigate("/dashboard")
-  })
-  .catch(error => {
-    console.log('Error : ' , error)
-  });
-  
-  }
+    axios.post("http://localhost:3000/api/v1/account/deposit", payload, {
+        headers: { Authorization: `Bearer ${token}` } // Add Authorization header
+    })
+    .then(response => {
+        console.log('Success', response.data);
+        navigate("/dashboard");
+        alert("Money deposited successfully")
+    })
+    .catch(error => {
+        console.log('Error:', error);
+        alert(error)
+    });
+};
+
 
   
 
@@ -51,7 +57,7 @@ const MoneyDeposite = () => {
                   onChange={(e : any) => setAmount(e.target.value)}
                 />
               </div>
-              <button className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white " onClick={deposite}>
+              <button className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white cursor-pointer hover:bg-green-600 transition" onClick={deposite}>
                 Deposite
               </button>
             </div>

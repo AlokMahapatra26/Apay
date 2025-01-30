@@ -5,6 +5,7 @@ import Button from "./Button";
 
 export const Users = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   
   interface User {
     id: string;
@@ -34,6 +35,8 @@ export const Users = () => {
       // Send GET request with filter as a query parameter
       const response = await axios.get("http://localhost:3000/api/v1/user/bulk", {
         params: { filter },
+        headers : {Authorization : `Bearer ${token}`}
+
       });
 
       // Update users with the response data

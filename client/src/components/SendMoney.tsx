@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useState } from "react"
 import { useLocation } from "react-router"
+import { useNavigate } from "react-router";
 
 export const SendMoney = () => {
 
     const [amount , setAmount] = useState();
     const location = useLocation();
+    const navigate = useNavigate();
     const {to , username , email} = location.state;
 
     const id = localStorage.getItem('id')
@@ -18,16 +20,24 @@ export const SendMoney = () => {
     }
 
     const initiatePayment = () => {
-
-        axios.post("http://localhost:3000/api/v1/account/transfer" , payload).then(response => {
-            console.log('Success' , response.data)
-          })
-          .catch(error => {
-            console.log('Error : ' , error)
-          });
-
-        console.log(amount)
-    }
+        const token = localStorage.getItem('token'); // Get token from localStorage
+    
+        axios.post("http://localhost:3000/api/v1/account/transfer", payload, {
+            headers: { Authorization: `Bearer ${token}` } // Add Authorization header
+        })
+        .then(response => {
+            console.log('Success', response.data);
+            alert(response.data.message);
+            navigate("/dashboard");
+        })
+        .catch(error => {
+            console.log('Error:', error);
+            alert(error.response.data.msg)
+        });
+    
+        console.log(amount);
+    };
+    
     
 
 
@@ -64,7 +74,7 @@ export const SendMoney = () => {
                         onChange={(e : any)=>setAmount(e.target.value)}
                     />
                     </div>
-                    <button onClick={initiatePayment} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white ">
+                    <button onClick={initiatePayment} className="justify-center rounded-md text-lg font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white cursor-pointer hover:bg-green-600" >
                         Pay
                     </button>
                 </div>

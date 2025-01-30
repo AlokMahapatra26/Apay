@@ -5,11 +5,13 @@ import Dashboard from './pages/Dashboard'
 import {SendMoney} from "./components/SendMoney"
 import MoneyDeposite from './components/MoneyDeposite'
 import UserInfo from './components/UserInfo'
+import Landing from './pages/Landing'
 
 function App() {
   return (
     <>
         <Routes>
+          <Route path='/' element={<Landing/>}/>
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />

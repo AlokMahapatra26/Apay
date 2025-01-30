@@ -27,22 +27,26 @@ const Register = () => {
     setPassword(e.target.value)
   }
 
-  const handleSubmit =  ()=>{
-    console.log("Name : " , name , "Username : " , username , "Email : " , email , "Password : " , password)
+  const handleSubmit = () => {
+    console.log("Name:", name, "Username:", username, "Email:", email, "Password:", password);
 
-    axios.post("http://localhost:3000/api/v1/user/register" , {
-      name : name,
-      username : username,
-      email : email,
-      password : password
-    }).then(
-      (response)=>{
-        console.log(response)
-        navigate("/login")
-    }
-    )
+    axios.post("http://localhost:3000/api/v1/user/register", {
+        name: name,
+        username: username,
+        email: email,
+        password: password
+    })
+    .then((response) => {
+        console.log(response);
+        navigate("/login");  
+    })
+    .catch((error) => {
+        console.error('Error:', error.response ? error.response.data : error.message);
+        alert(error.response.data.errors);
+        
+    });
+};
 
-  }
 
 
   return (

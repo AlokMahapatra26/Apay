@@ -6,20 +6,26 @@ export const Balance = () => {
 
     const [balance , setBalance] = useState(0);
 
-    useEffect(()=> {
-        const id = localStorage.getItem('id')
-    const payload = {
-        userId : id,
-    }
-
-    axios.post("http://localhost:3000/api/v1/account/balance" , payload).then(response => {
-        console.log('Success' , response.data)
-        setBalance(response.data.balance)
-      })
-      .catch(error => {
-        console.log('Error : ' , error)
-      });
-    },[])
+    useEffect(() => {
+        const id = localStorage.getItem('id');
+        const token = localStorage.getItem('token'); // Get token from localStorage
+    
+        const payload = {
+            userId: id,
+        };
+    
+        axios.post("http://localhost:3000/api/v1/account/balance", payload, {
+            headers: { Authorization: `Bearer ${token}` } // Add Authorization header
+        })
+        .then(response => {
+            console.log('Success', response.data);
+            setBalance(response.data.balance);
+        })
+        .catch(error => {
+            console.log('Error:', error);
+        });
+    }, []);
+    
 
     return <div className="flex">
         <div className="font-bold text-lg">

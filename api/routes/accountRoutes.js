@@ -1,10 +1,11 @@
 const express = require('express');
 const Account = require('../models/Account');
 const mongoose = require('mongoose');
+const verifyToken = require('../middlewares/verifyToken');
 const router = express.Router();
 
 
-router.post("/balance", async (req, res) => {
+router.post("/balance", verifyToken , async (req, res) => {
     try{
         const {userId} = req.body;
         const account = await Account.findOne({ userId: userId });
@@ -20,7 +21,7 @@ router.post("/balance", async (req, res) => {
 });
 
 
-router.post("/deposit", async (req, res) => {
+router.post("/deposit", verifyToken ,async (req, res) => {
     try{
 
         const {userId  ,amount } = req.body;
@@ -54,7 +55,7 @@ router.post("/deposit", async (req, res) => {
 
 
 ///// NOT SO GOOD APPROACH ////////
-router.post("/transfer", async (req, res) => {
+router.post("/transfer" , verifyToken, async (req, res) => {
     const {amount, to , userId } = req.body;
 
     const account = await Account.findOne({ userId });
@@ -63,7 +64,7 @@ router.post("/transfer", async (req, res) => {
         return res.status(400).json({ msg: "Account not found" });
     }
 
-    if (account.balance <= amount) {
+    if (account.balance < amount) {
         return res.status(400).json({ msg: "Insufficient balance" });
     }
 

@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const {z} = require('zod')
 const jwt = require('jsonwebtoken');
 const Account = require('../models/Account');
+const verifyToken = require('../middlewares/verifyToken');
 
 
 // Zod schema for user registration
@@ -23,9 +24,14 @@ router.post("/register", async (req, res) => {
         const { name, username, email, password } = validatedUser;
 
         // Check if user already exists in the database
-        const existingUser = await User.findOne({ email , username});
+        const existingUser = await User.findOne({ email});
         if (existingUser) {
             return res.status(400).json({ msg: "User already exists" });
+        }
+
+        const existingUsername = await User.findOne({username});
+        if (existingUsername) {
+            return res.status(400).json({ msg: "Username already exists" });
         }
 
         // Hash the password
@@ -150,7 +156,7 @@ const updatedBody = z.object({
 })
 
 
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", verifyToken , async (req, res) => {
   try{
     const validatedBody = updatedBody.parse(req.body);
     const { name, username, email, password } = validatedBody;
@@ -191,7 +197,7 @@ router.put("/update/:id", async (req, res) => {
 
 
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyToken ,async (req, res) => {
   try{
     const { id } = req.params;
     const user = await User.findById(id);
@@ -207,7 +213,7 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 
-router.get("/bulk" ,async (req,res)=>{ 
+router.get("/bulk" , verifyToken, async (req,res)=>{ 
   
   const filter = req.query.filter || "";
 

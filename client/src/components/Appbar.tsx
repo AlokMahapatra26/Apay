@@ -5,6 +5,14 @@ export const Appbar = () => {
 
 
   const navigate = useNavigate();
+  const name = localStorage.getItem("name") || "G" ;
+
+  // hidel  profile icon if there no data in local storage
+  const hidden = localStorage.getItem("name")
+  let con = false;
+  if(hidden == null){
+    con = true;
+  }
 
     return <div className="p-4 flex justify-between  items-center ">
 
@@ -20,10 +28,11 @@ export const Appbar = () => {
 
         </div>
         <button
+       hidden={con} 
       onClick={()=> navigate("/user-info")}
       className="text-black  w-12 h-12 rounded-full cursor-pointer bg-green-500 text-4xl  text-white"
     >
-     {"A"}
+     {name[0]}
     </button>
         
             
