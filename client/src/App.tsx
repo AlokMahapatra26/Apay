@@ -6,6 +6,7 @@ import {SendMoney} from "./components/SendMoney"
 import MoneyDeposite from './components/MoneyDeposite'
 import UserInfo from './components/UserInfo'
 import Landing from './pages/Landing'
+import AdminPanel from './pages/AdminPanel'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='/send' element={<SendMoney/>} />
           <Route path='/deposite' element={<MoneyDeposite/>} />
           <Route path="user-info" element={<UserInfo/>} />
+          <Route path='/admin-panel'  element={<AdminPanel/>} />
         </Routes>
      
     </>

@@ -80,23 +80,25 @@ export const Users = () => {
 };
 
 function User({ user, navigate}:any) {
-    return <div className="flex justify-between  p-2 my-2 ">
-        <div className="flex">
-            <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-                <div className="flex flex-col justify-center h-full text-xl">
-                    {user.name[0]}
-                </div>
-            </div>
-            <div className="flex flex-col justify-center h-ful">
-                <div>
-                    {user.name}
-                </div>
-            </div>
+    return <div className="flex justify-between items-center p-4 my-2 bg-white shadow-md rounded-lg">
+    {/* User Info Section */}
+    <div className="flex items-center space-x-4">
+        {/* User Avatar */}
+        <div className="rounded-full h-12 w-12 bg-slate-200 flex items-center justify-center text-xl font-semibold text-gray-700">
+            {user.name[0]}
         </div>
 
-        <div className="flex flex-col justify-center h-ful">
-            <Button title="Send Money" onClick={()=> navigate("/send" , {state : {to: user.id , username:user.username , email : user.email}})}/>
-                           
+        {/* User Name */}
+        <div className="text-lg font-medium text-gray-900">
+            {user.name}
         </div>
     </div>
+
+    {/* Send Money Button */}
+    <Button 
+        title="Send Money" 
+        onClick={() => navigate("/send", { state: { to: user.id, username: user.username, email: user.email }})}
+    />
+</div>
+
 }

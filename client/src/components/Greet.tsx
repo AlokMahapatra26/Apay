@@ -4,7 +4,7 @@ interface GreetProps {
 
 const Greet = ({ name = "Guest" }: GreetProps) => {
   return (
-    <div className="text-xl font-semibold text-center text-black p-4">
+    <div className="text-2xl font-semibold text-center text-black p-4">
       Hello, {name}!
     </div>
   );

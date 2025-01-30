@@ -50,7 +50,7 @@ const Register = () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-center pt-40">
+    <div className="flex flex-col items-center justify-center  bg-gradient-to-br from-green-50 to-green-100 min-h-[calc(100vh-88px)]">
       <div className="w-96  p-4 rounded-lg flex flex-col space-y-4 ">
       <Heading title="Register" />
       <SubHeading subtitle="Enter your info to register" />

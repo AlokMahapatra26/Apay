@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./db');
 const userRoutes = require('./routes/userRoutes');
 const accountRoutes = require('./routes/accountRoutes');
+const adminRoutes = require("./routes/adminRoutes")
 require('dotenv').config();
 const cors  = require('cors');
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors());
 // Define routes
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/account', accountRoutes);
+app.use('/api/v1/admin' , adminRoutes)
 
 app.get("/" , (req,res)=>{
     res.json({message:"Server is up and running"});
