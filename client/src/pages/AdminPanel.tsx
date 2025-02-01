@@ -16,11 +16,17 @@ const AdminPanel = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 6;
 
+  const id = localStorage.getItem('id');
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/v1/admin/users-info");
-        const { data: total_money } = await axios.get("http://localhost:3000/api/v1/admin/get-all-balance")
+        const { data } = await axios.get("http://localhost:3000/api/v1/admin/users-info" , {
+          headers : {id:id}
+        });
+        const { data: total_money } = await axios.get("http://localhost:3000/api/v1/admin/get-all-balance" , {
+          headers : {id:id}
+        })
         setUsers(data);
         setTotalMoney(total_money)
       } catch (error) {
@@ -33,7 +39,9 @@ const AdminPanel = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/admin/delete/${id}`);
+      await axios.delete(`http://localhost:3000/api/v1/admin/delete/${id}` , {
+        headers : {id : id}
+      });
       setUsers(users.filter(user => user._id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);

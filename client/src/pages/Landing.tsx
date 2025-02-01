@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 
 const Landing = () => {
   const navigate = useNavigate();
+  const user = localStorage.getItem('name')
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-88px)] bg-gradient-to-br from-green-50 to-green-100 p-4">
@@ -20,7 +21,7 @@ const Landing = () => {
 
       {/* Call-to-Action Button */}
       <button
-        onClick={() => navigate("/register")}
+        onClick={() => navigate(user ? '/dashboard' : '/login')}
         className="px-4 py-2 sm:px-6 sm:py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition duration-300 ease-in-out text-base sm:text-lg font-semibold cursor-pointer"
       >
         Join Now

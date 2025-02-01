@@ -41,7 +41,7 @@ export const Users = () => {
 
       // Update users with the response data
       setUsers(response.data.users);
-      console.log(response.data.users)
+     
     } catch (err) {
       console.error("Error fetching users:", err);
       setError("Failed to fetch users. Please try again.");

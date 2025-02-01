@@ -21,21 +21,29 @@ const Login = () => {
 
   const handleSubmit = ()=>{
     console.log("Email : " , email , "Password : " , password)
-
-    axios.post("http://localhost:3000/api/v1/user/login" , {
-      email : email,
-      password : password
-    }).then(
-      (response)=>{
-        console.log(response)
-        localStorage.setItem("token" , response.data.token)
-        localStorage.setItem("id" , response.data.user.id)
-        localStorage.setItem("name" , response.data.user.name)
-        localStorage.setItem("username" , response.data.user.username)
-        localStorage.setItem("email" , response.data.user.email)
-        navigate("/dashboard")
-    }
-    )
+    
+    
+    axios.post("http://localhost:3000/api/v1/user/login", {
+      email: email,
+      password: password
+  })
+  .then((response) => {
+      console.log(response);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("id", response.data.user.id);
+      localStorage.setItem("name", response.data.user.name);
+      localStorage.setItem("username", response.data.user.username);
+      localStorage.setItem("email", response.data.user.email);
+      navigate("/dashboard");
+  })
+  .catch((error) => {
+      // Check if the error has a response from the server
+   
+          alert(`Error: ${error.message}`);
+      
+  });
+    
+    
   }
 
 
